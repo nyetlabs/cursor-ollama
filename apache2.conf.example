@@ -1,0 +1,25 @@
+<VirtualHost *:443>
+    ServerName ollama.example.org
+
+    SSLEngine on
+    # Add certs here
+    # ...
+
+    ProxyRequests Off
+    ProxyPreserveHost On
+
+    SetEnv proxy-nokeepalive 1
+    SetEnv proxy-sendchunked 1
+
+    ProxyTimeout 600
+    SetEnv no-gzip 1
+    SetEnv proxy-initial-not-pooled 1
+    <Location />
+        <RequireAll>
+            Require expr "%{HTTP:Authorization} == 'Bearer EXAMPLE_TOKEN'"
+        </RequireAll>
+        # Forward requests to the  Ollama proxy
+        ProxyPass http://localhost:9000/
+        ProxyPassReverse http://localhost:9000/
+    </Location>
+</VirtualHost>

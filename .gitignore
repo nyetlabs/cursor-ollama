@@ -1,0 +1,5 @@
+/build/
+/.cursor/
+.*.swp
+.env
+cursor-ollama-debug.log
